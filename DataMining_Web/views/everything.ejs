@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Everything</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1> All Data </h1>
+    <table>
+      <% data.forEach(item => { %>
+        <tr>
+            <td><%= item._id.toString() %></td>
+            <td><%= item.Date %></td>
+            <td><%= item['Arrival / Departure'] %></td>
+            <td><%= item['Hong Kong Residents'] %></td>
+            <td><%= item['Mainland Visitors'] %></td>
+            <td><%= item['Other Visitors'] %></td>
+            <td><%= item.Total %></td>
+        </tr>
+    <% }); %>    
+     </table>
+  </body>
+</html>

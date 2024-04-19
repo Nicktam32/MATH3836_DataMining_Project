@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Chart Race</title>
+  <!-- Include amCharts library -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+</head>
+<body>
+  <h1>Line Chart Race: Arrival/Departure Data by Time</h1>
+  <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+
+  <!-- JavaScript to create and populate the chart -->
+  <script>
+    am4core.ready(function() {
+      // Create chart instance
+      var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+      // Parse the JSON data
+      var data = JSON.parse('<%- JSON.stringify(data) %>');
+
+      // Combine data by month and category, calculate average
+      var combinedData = {};
+      data.forEach(function(item) {
+        var month = new Date(item.Date).getMonth() + 1; // Get month (0-11)
+        var year = new Date(item.Date).getFullYear();
+        var monthYear = year + "-" + month.toString().padStart(2, "0"); // Format month-year
+        if (!combinedData[monthYear]) {
+          combinedData[monthYear] = {
+            Date: new Date(year, month - 1), // Create date object for the month
+            "Hong Kong Residents": [],
+            "Mainland Visitors": [],
+            "Other Visitors": []
+          };
+        }
+        combinedData[monthYear]["Hong Kong Residents"].push(parseInt(item["Hong Kong Residents"]));
+        combinedData[monthYear]["Mainland Visitors"].push(parseInt(item["Mainland Visitors"]));
+        combinedData[monthYear]["Other Visitors"].push(parseInt(item["Other Visitors"]));
+      });
+
+      // Calculate average for each month and category
+      var chartData = [];
+      for (var monthYear in combinedData) {
+        var entry = combinedData[monthYear];
+        chartData.push({
+          Date: entry.Date,
+          "Hong Kong Residents": entry["Hong Kong Residents"].reduce((a, b) => a + b) / entry["Hong Kong Residents"].length,
+          "Mainland Visitors": entry["Mainland Visitors"].reduce((a, b) => a + b) / entry["Mainland Visitors"].length,
+          "Other Visitors": entry["Other Visitors"].reduce((a, b) => a + b) / entry["Other Visitors"].length
+        });
+      }
+
+      // Set the data to the chart
+      chart.data = chartData;
+
+      // Create date axis
+      var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      dateAxis.dateFormatter.inputDateFormat = "yyyy-MM"; // Adjust the date format
+      dateAxis.renderer.minGridDistance = 60; // Adjust minimum grid distance
+
+      // Create value axis
+      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+      // Create series for each data field
+      var seriesHongKong = chart.series.push(new am4charts.LineSeries());
+      seriesHongKong.dataFields.valueY = "Hong Kong Residents";
+      seriesHongKong.dataFields.dateX = "Date";
+      seriesHongKong.name = "Hong Kong Residents";
+      seriesHongKong.strokeWidth = 3; // Increase line width
+
+      var seriesMainland = chart.series.push(new am4charts.LineSeries());
+      seriesMainland.dataFields.valueY = "Mainland Visitors";
+      seriesMainland.dataFields.dateX = "Date";
+      seriesMainland.name = "Mainland Visitors";
+      seriesMainland.strokeWidth = 3; // Increase line width
+
+      var seriesOther = chart.series.push(new am4charts.LineSeries());
+      seriesOther.dataFields.valueY = "Other Visitors";
+      seriesOther.dataFields.dateX = "Date";
+      seriesOther.name = "Other Visitors";
+      seriesOther.strokeWidth = 3; // Increase line width
+
+      // Add scrollbar
+      chart.scrollbarX = new am4core.Scrollbar();
+
+      // Add cursor
+      chart.cursor = new am4charts.XYCursor();
+
+      // Add legend
+      chart.legend = new am4charts.Legend();
+    });
+  </script>
+</body>
+</html>

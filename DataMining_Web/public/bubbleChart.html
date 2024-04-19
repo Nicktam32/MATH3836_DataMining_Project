@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Abuse cases A&E attendance, Force Layout Chart</title>    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+        .toast {
+            display: none;
+            position: absolute;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <svg width="800" height="480">
+    </svg>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Bootstrap</strong>
+        </div>
+        <div class="toast-body">
+            Hello, world! This is a toast message.
+        </div>
+    </div>
+
+    <script>
+        var abuses = [
+            { district: "Central & Western", cases: 305/15, map_id: 1 },
+            { district: "Wan Chai", cases: 199/15, map_id: 15 },
+            { district: "Eastern", cases: 483/15, map_id: 2 },
+            { district: "Southern", cases: 209/15, map_id: 11 },
+            { district: "Yau Tsim Mong", cases: 526/15, map_id: 17 },
+            { district: "Sham Shui Po", cases: 403/15, map_id: 10 },
+            { district: "Kowloon City", cases: 284/15, map_id: 4 },
+            { district: "Wong Tai Sin", cases: 281/15, map_id: 16 },
+            { district: "Kwun Tong", cases: 479/15, map_id: 6 },
+            { district: "Kwai Tsing", cases: 345/15, map_id: 5 },
+            { district: "Tsuen Wan", cases: 250/15, map_id: 13 },
+            { district: "Tuen Mun", cases: 516/15, map_id: 14 },
+            { district: "Yuen Long", cases: 770/15, map_id: 18 },
+            { district: "Northern", cases: 359/15, map_id: 7 },
+            { district: "Tai Po", cases: 339/15, map_id: 12 },
+            { district: "Shatin", cases: 500/15, map_id: 9 },
+            { district: "Sai Kung", cases: 373/15, map_id: 8 },
+            { district: "Islands", cases: 187/15, map_id: 3 }
+        ];
+
+        var myScale = d3.scaleLinear().domain([10, 19, 55]).range([100, 500, 800]);
+        var myColorScale = d3.scaleLinear().domain([10, 19, 55]).range(["green", "orange", "red"]);
+
+        var svg = d3.select("svg");
+
+        // Code for Force Layout Simulator
+
+        var circles = d3.selectAll("circle");
+
+        var tooltip = d3.select(".toast");
+        var title = d3.select(".toast-header .me-auto");
+        var subtitle = d3.select(".toast-body");
+
+        var simulation = d3.forceSimulation();
+        simulation.nodes(abuses);
+
+        var circles = svg.selectAll("circle")
+            .data(abuses)
+            .enter().append('circle')
+            .attr('r', 30)
+            .attr('fill', "blue")
+            .attr('r', function (d) {
+                return d.cases;
+            })
+            .attr('fill', function (d) {
+                return myColorScale(d.cases);
+            })
+            .on("mouseover", function (event, d) {
+                tooltip.style("display", "block");
+
+                title.text(d.district);
+                subtitle.text(d.cases * 15 + "Municipal Solid Waste in Tonnes.");
+            })
+            .on("mouseout", function () {
+                tooltip.style("display", "none");
+            })
+            .on('mousemove', function (event) {
+                let coords = d3.pointer(event);
+                tooltip
+                    .style("left", (coords[0] + 15) + "px")
+                    .style("top", (coords[1] - 95) + "px");
+            });
+            
+        simulation.on("tick", function () {
+            circles
+                .attr("cx", function (d) {
+                    return d.x
+                })
+                .attr("cy", function (d) {
+                    return d.y
+                })
+        });
+        
+        var simulation = d3.forceSimulation()
+        .force("center", d3.forceCenter(400, 240));
+
+        var simulation = d3.forceSimulation()
+        .force("collide", d3.forceCollide().radius(30))
+        .force("center", d3.forceCenter(400, 240));
+
+        var simulation = d3.forceSimulation()
+        .force("collide", d3.forceCollide().radius(function (d) { return d.cases; }))
+        .force("center", d3.forceCenter(400, 240));
+
+        var simulation = d3.forceSimulation()
+        .force("collide", d3.forceCollide().radius(function (d) { return d.cases + 5; }))
+        .force("center", d3.forceCenter(400, 240));
+
+
+        var simulation = d3.forceSimulation(abuses)
+            .force("collide", d3.forceCollide().radius(function (d) { return d.cases + 5; }))
+            .force('x', d3.forceX().x(function (d) { return myScale(d.cases); }))
+            .force('y', d3.forceY().y(240))
+            .on("tick", function () {
+                circles
+                    .attr("cx", function (d) { return d.x; })
+                    .attr("cy", function (d) { return d.y; });
+            });
+
+
+        svg.append("g")
+        .attr("transform", "translate(0, 450)")
+        .call(d3.axisBottom(myScale));
+
+        var simulation = d3.forceSimulation()
+        .force("collide", d3.forceCollide().radius(function (d) { return d.cases + 5; }))
+        // .force("center", d3.forceCenter(400, 240))
+        .force('x', d3.forceX().x(function (d) {
+            return myScale(d.cases);
+        }))
+        .force('y', d3.forceY().strength(0.01).y(function (d) {
+            return 480;
+        }));
+    </script>
+</body>
+
+</html>
