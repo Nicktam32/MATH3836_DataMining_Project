@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculator</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300&family=Yeseva+One&display=swap"
+        rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
+
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        color: white;
+      }
+
+      h1 {
+        color: #ffffff; /* White */
+      }
+
+      p {
+        color: #cccccc; /* Light gray */
+      color: white;
+      }
+
+      input[type="number"],
+input[type="checkbox"] {
+  background-color: transparent; /* Set background to transparent */
+  color: #ffffff; /* White text color */
+  padding: 8px 12px; /* Add some padding */
+  border: 1px solid #ffffff; /* White border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Adjust font size as needed */
+  outline: none; /* Remove outline on focus */
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+input[type="number"]:focus,
+input[type="checkbox"]:focus {
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white background on focus */
+}
+
+input[type="checkbox"] {
+  appearance: none; /* Remove default checkbox appearance */
+  width: 20px; /* Adjust the size of the checkbox */
+  height: 20px;
+  border: 2px solid #ffffff; /* White border */
+  vertical-align: middle; /* Vertically align with the label */
+  position: relative;
+  margin-right: 8px; /* Add some spacing between checkbox and label */
+}
+
+input[type="checkbox"]:checked::before {
+  content: "\2713"; /* Unicode checkmark character */
+  color: #ffffff; /* White checkmark color */
+  font-size: 14px; /* Adjust the size of the checkmark */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+    </style>
+</head>
+
+<body class="mx-5">
+  <!-- NavBar -->
+  <nav class="navbar bg-transparent navbar-dark navbar-expand-md p-3">
+    <div class="container-fluid">
+      <a href="" class="navbar-brand">VISUALIZE THE PROPERTY MARKET</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto nav-pills">
+          <li class="nav-item px-1">
+            <a href="index.html" class="nav-link active" aria-current="page">About this Project</a>
+          </li>
+          <li class="nav-item px-1">
+            <a href="charts.html" class="nav-link">Statistics</a>
+          </li>
+          <li class="nav-item px-1">
+            <a href="blog.html" class="nav-link">Blog</a>
+          </li>
+          <li class="nav-item px-1">
+            <a href="calculator.html" class="nav-link">Calculator</a>
+          </li>
+          <li class="nav-item px-1">
+            <a href="agent.html" class="nav-link">Agent Help</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <h1>Realize Your Personal Dream</h1>
+    <p>Welcome! This application provides a systematic way to calculate the time and money required to realize your dream of buying a house.</p>
+    <form>
+        <label for="propertyValue">Property Value:</label>
+        <input type="number" id="propertyValue" required>
+        <br>
+        <label for="isFirstTimeBuyer">Are you a first-time buyer?</label>
+        <input type="checkbox" id="isFirstTimeBuyer">
+        <br>
+        <label for="majorIncomeHK">Is your major income from Hong Kong?</label>
+        <input type="checkbox" id="majorIncomeHK">
+        <br>
+        <label for="isPermanentResident">Are you a permanent resident in Hong Kong?</label>
+        <input type="checkbox" id="isPermanentResident">
+        <br>
+        <label for="agencyRate">Agency Rate (%):</label>
+        <input type="number" id="agencyRate" min="0" max="1" step="0.01" required>
+        <br>
+        <label for="agencyRebateRate">Agency Rebate Rate (%):</label>
+        <input type="number" id="agencyRebateRate" min="0" max="50" step="0.01" required>
+        <br>
+        <label for="legalRate">Legal Rate (%):</label>
+        <input type="number" id="legalRate" min="0" max="0.1" step="0.001" required>
+        <br>
+        <label for="legalRebateRate">Legal Rebate Rate (%):</label>
+        <input type="number" id="legalRebateRate" min="0" max="50" step="0.01" required>
+        <br>
+        <label for="insuranceRebateRate">Mortgage Insurance Rebate Rate (%):</label>
+        <input type="number" id="insuranceRebateRate" min="0" max="40" step="0.01" required>
+        <br>
+        <label for="interestRate">Annual Interest Rate (%):</label>
+        <input type="number" id="interestRate" min="0" max="100" required>
+        <br>
+        <label for="savedAmount">Amount Saved:</label>
+        <input type="number" id="savedAmount" min="0" required>
+        <br>
+        <label for="monthlySalary">Monthly Household Income:</label>
+        <input type="number" id="monthlySalary" min="0" required>
+        <br>
+        <label for="annualReturnRate">Annual Saving Return Rate (%):</label>
+        <input type="number" id="annualReturnRate" min="0" required>
+        <br>
+        <label for="monthlyPercentageSaving">Percentage of Monthly Saving (%):</label>
+        <input type="number" id="monthlyPercentageSaving" min="0" max="100" required>
+        <br>
+        <button type="button" onclick="calculateResult()">Calculate</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateResult() {
+            // Get input values
+            const propertyValue = parseFloat(document.getElementById("propertyValue").value);
+            const isFirstTimeBuyer = document.getElementById("isFirstTimeBuyer").checked;
+            const majorIncomeHK = document.getElementById("majorIncomeHK").checked;
+            const isPermanentResident = document.getElementById("isPermanentResident").checked;
+            const agencyRate = parseFloat(document.getElementById("agencyRate").value);
+            const agencyRebateRate = parseFloat(document.getElementById("agencyRebateRate").value) / 100;
+            const legalRate = parseFloat(document.getElementById("legalRate").value);
+            const legalRebateRate = parseFloat(document.getElementById("legalRebateRate").value) / 100;
+            const insuranceRebateRate = parseFloat(document.getElementById("insuranceRebateRate").value) / 100;
+            const interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+            const savedAmount = parseFloat(document.getElementById("savedAmount").value);
+            const monthlySalary = parseFloat(document.getElementById("monthlySalary").value);
+            const annualReturnRate = parseFloat(document.getElementById("annualReturnRate").value) / 100;
+            const monthlyPercentageSaving = parseFloat(document.getElementById("monthlyPercentageSaving").value) / 100;
+
+            const stampDuty = (value, isFirstBuy) => {
+  let stampDutyRate;
+
+  if (isFirstBuy) {
+    // First-time buyer stamp duty rates
+    if (value <= 2000000) {
+      stampDutyRate = 0;
+    } else if (value <= 2351760) {
+      stampDutyRate = 0.1;
+    } else if (value <= 3000000) {
+      stampDutyRate = 0.15;
+    } else if (value <= 4000000) {
+      stampDutyRate = 0.2;
+    } else if (value <= 6000000) {
+      stampDutyRate = 0.25;
+    } else {
+      stampDutyRate = 0.3;
+    }
+  } else {
+    // Subsequent buyer stamp duty rates
+    if (value <= 2000000) {
+      stampDutyRate = 0.15;
+    } else if (value <= 3000000) {
+      stampDutyRate = 0.2;
+    } else if (value <= 4000000) {
+      stampDutyRate = 0.25;
+    } else if (value <= 6000000) {
+      stampDutyRate = 0.3;
+    } else if (value <= 8000000) {
+      stampDutyRate = 0.35;
+    } else if (value <= 10000000) {
+      stampDutyRate = 0.4;
+    } else if (value <= 20000000) {
+      stampDutyRate = 0.45;
+    } else {
+      stampDutyRate = 0.5;
+    }
+  }
+
+  return value * stampDutyRate;
+};
+
+            const agencyFee = (value, rate, rebateRate) => {
+                return value * rate * (1 - rebateRate);
+            };
+
+            const legalFee = (value, rate, rebateRate) => {
+                return value * rate * (1 - rebateRate);
+            };
+
+            const payDownPayment = (value, isFirstBuy, agencyFee, legalFee, stampDuty) => {
+            // Calculate down payment
+            let downPayment;
+            if (isFirstBuy) {
+              downPayment = 0.1 * value; // 10% for first-time buyers
+            } else {
+              downPayment = 0.2 * value; // 20% for subsequent buyers
+            }
+
+            // Add other fees
+            downPayment += agencyFee + legalFee + stampDuty;
+
+            return downPayment;
+            };
+
+            const mortgageInsurance = (amount, tenor) => {
+              // Assume mortgage insurance is 3% of the loan amount
+              return 0.03 * amount;
+            };
+
+            const loanAmount = (value, years, mortgageInsurance) => {
+              const downPayment = payDownPayment(value, false, 0, 0, 0); // Assume not first-time buyer and no additional fees
+              const loanAmount = value - downPayment;
+              return loanAmount + mortgageInsurance;
+            };
+
+            const monthlyPayment = (value, interest, years) => {
+              const principal = loanAmount(value, years, 0); // Assume no mortgage insurance
+              const monthlyInterest = interest / 12; // Convert annual interest rate to monthly
+              const numberOfPayments = years * 12;
+              const x = Math.pow(1 + monthlyInterest, numberOfPayments);
+              const monthlyPayment = (principal * x * monthlyInterest) / (x - 1);
+              return monthlyPayment;
+            };
+
+            const dtiTest = (value, interest, years, monthlySalary) => {
+              const monthlyPayment = monthlyPayment(value, interest, years);
+              const dti = (monthlyPayment / monthlySalary) * 100; // Calculate DTI as a percentage
+              return dti <= 35; // Assuming DTI should not exceed 35%
+            };
+
+            const stressTest = (value, interest, years, monthlySalary) => {
+              const stressedInterest = interest + 0.03; // Assume 3% interest rate increase for stress test
+              const monthlyPayment = monthlyPayment(value, stressedInterest, years);
+              const dti = (monthlyPayment / monthlySalary) * 100; // Calculate DTI as a percentage
+              return dti <= 45; // Assuming stressed DTI should not exceed 45%
+            };
+
+            const monthNum = (value, currentSaving) => {
+              const downPayment = payDownPayment(value, false, 0, 0, 0); // Assume not first-time buyer and no additional fees
+              const monthsToSave = downPayment / (currentSaving / 12); // Assuming monthly savings
+              return Math.ceil(monthsToSave); // Round up to the nearest month
+            };
+
+            let mortgageYears;
+
+            // Calculate and display results
+            const result = document.getElementById("result");
+            result.innerHTML = `
+                <h2>Result</h2>
+                <p>You are ${isFirstTimeBuyer ? "a first-time buyer" : "not a first-time buyer"}.</p>
+                <p>Your major income is ${majorIncomeHK ? "from Hong Kong" : "not from Hong Kong"}.</p>
+                <p>You are ${isPermanentResident ? "a permanent resident in Hong Kong" : "not a permanent resident in Hong Kong"}.</p>
+                <p>Total Agency Fee: ${agencyFee(propertyValue, agencyRate, agencyRebateRate)}</p>
+                <p>Total Legal Fee: ${legalFee(propertyValue, legalRate, legalRebateRate)}</p>
+                <p>Pay Down Payment: ${payDownPayment(propertyValue, isFirstTimeBuyer, agencyFee(propertyValue, agencyRate, agencyRebateRate), legalFee(propertyValue, legalRate, legalRebateRate), stampDuty(propertyValue, isFirstTimeBuyer))}</p>
+                <p>Stamp Duty: ${stampDuty(propertyValue, isFirstTimeBuyer)}</p>
+                <p>Mortgage Insurance: ${mortgageInsurance(loanAmount(propertyValue, mortgageYears, 0), mortgageYears)}</p>
+                <p>Loan Amount: ${loanAmount(propertyValue, mortgageYears, mortgageInsurance(loanAmount(propertyValue, mortgageYears, 0), mortgageYears))}</p>
+                <p>Monthly Payment: ${monthlyPayment(propertyValue, mortgageInterestRate, mortgageYears)}</p>
+                <p>DTI Test: ${dtiTest(propertyValue, mortgageInterestRate, mortgageYears, majorIncome) ? "Passed" : "Failed"}</p>
+                <p>Stress Test: ${stressTest(propertyValue, mortgageInterestRate, mortgageYears, majorIncome) ? "Passed" : "Failed"}</p>
+                <p>Months to Save for Down Payment: ${monthNum(propertyValue, currentSavings)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
