@@ -41,11 +41,12 @@
                 <a href="blog.html" class="nav-link">Blog</a>
             </li>
             <li class="nav-item px-1">
-                <a href="calculator.html" class="nav-link">Calculator</a>
-              </li>
-              <li class="nav-item px-1">
                 <a href="forum.html" class="nav-link">Community Forum</a>
               </li>
+            <li class="nav-item px-1">
+                <a href="calculator.html" class="nav-link">Calculator</a>
+              </li>
+              
               <li class="nav-item px-1">
                 <a href="agent.html" class="nav-link">Agent Help</a>
               </li>
@@ -56,26 +57,25 @@
 
     <!-- Content -->
     <div class="container-fluid pt-4 px-4 text-light" id="content">
-        <h1 class="text-center fw-bolder pb-4">Reserach in Hong Kong's waste disposal</h1>
+        <h1 class="text-center fw-bolder pb-4">Reserach in Hong Kong's Property Market</h1>
         <div class="row g-4 text-center">
             <!-- Charts -->
             <div class="row-md-6">
                 <div class="bg-dark bg-opacity-50 rounded h-100 p-4">
-                    <h5 class="mb-4 fw-bold">Solid Waste Disposal Volumes (2009 - 2022)</h5>
+                    <h5 class="mb-4 fw-bold">Hong Kong Market Trend (1999 - 2023)</h5>
                     <div id="bar_chart"></div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-dark bg-opacity-50 rounded h-100 p-4">
-                    <h5 class="mb-4 fw-bold">The Difference between generation and recovery (2022)</h5>
-                    <div id="pie_chart"></div>
+                    <h5 class="mb-4 fw-bold">The trend in Rental Housing Market</h5>
+                    <img src="data/Screenshot 2024-05-01 235355.png" alt="Image Description">
+                    <div id="line_chart"></div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="bg-dark bg-opacity-50 rounded h-100 p-4" style="position: relative;">
-                    <h5 class="mb-4 fw-bold">Average daily source of domestic waste disposed of at landfills - by
-                        district
-                        (2022)</h5>
+                    <h5 class="mb-4 fw-bold">Average Rent by district today</h5>
                     <div style="width: 100%; height: auto; max-width: 800px;">
                         <svg id="bubble_chart" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet"
                             style="width: 100%; height: auto;"></svg>
@@ -93,215 +93,226 @@
     </div>
     <br><br><br>
 
+
     <!-- BarChart -->
-    <script>
-        am5.ready(function () {
-            var root = am5.Root.new("bar_chart");
+<script>
+    am5.ready(function() {
+        var root = am5.Root.new("bar_chart");
 
-            // Fetch data
-            var wasteCatData = fetch("/data/solid-waste-disposal-quantity-by-category-en-2022.json")
-                .then(response => response.json())
-                .then(data => {
-                    wasteCatData = data;
-                    setInitialData();
-                })
-                .catch(error => console.error("Error loading JSON file", error));
+        // Fetch data
+        var wasteCatData = fetch("/data/solid-waste-disposal-quantity-by-category-en-2022.json")
+            .then(response => response.json())
+            .then(data => {
+                wasteCatData = data;
+                setInitialData();
+            })
+            .catch(error => console.error("Error loading JSON file", error));
 
-            root.numberFormatter.setAll({
-                numberFormat: "#a",
+        root.numberFormatter.setAll({
+            numberFormat: "#a",
 
-                // Group into K (thousands), M (millions), and B (billions)
-                bigNumberPrefixes: [
-                    { number: 1e3, suffix: "K" },  // Added entry for thousands
-                    { number: 1e6, suffix: "M" },
-                    { number: 1e9, suffix: "B" }
-                ],
+            // Group into K (thousands), M (millions), and B (billions)
+            bigNumberPrefixes: [
+                { number: 1e3, suffix: "K" }, // Added entry for thousands
+                { number: 1e6, suffix: "M" },
+                { number: 1e9, suffix: "B" }
+            ],
 
-                // Do not use small number prefixes at all
-                smallNumberPrefixes: []
-            });
+            // Do not use small number prefixes at all
+            smallNumberPrefixes: []
+        });
 
-            var stepDuration = 2000;
+        var stepDuration = 2000;
 
-            // Set themes
-            root.setThemes([am5themes_Animated.new(root)]);
+        // Set themes
+        root.setThemes([am5themes_Animated.new(root)]);
 
-            // Create chart
-            var chart = root.container.children.push(am5xy.XYChart.new(root, {
+        // Create chart
+        var chart = root.container.children.push(
+            am5xy.XYChart.new(root, {
                 panX: true,
                 panY: true,
                 wheelX: "none",
                 wheelY: "none",
                 paddingLeft: 0
-            }));
+            })
+        );
 
-            chart.zoomOutButton.set("forceHidden", true);
+        chart.zoomOutButton.set("forceHidden", true);
 
-            // Create axes
-            var yRenderer = am5xy.AxisRendererY.new(root, {
-                minGridDistance: 20,
-                inversed: true,
-                minorGridEnabled: true
-            });
+        // Create axes
+        var yRenderer = am5xy.AxisRendererY.new(root, {
+            minGridDistance: 20,
+            inversed: true,
+            minorGridEnabled: true
+        });
 
-            // hide grid
-            yRenderer.grid.template.set("visible", false);
+        // hide grid
+        yRenderer.grid.template.set("visible", false);
 
-            var yAxis = chart.yAxes.push(am5xy.CategoryAxis.new(root, {
+        var yAxis = chart.yAxes.push(
+            am5xy.CategoryAxis.new(root, {
                 maxDeviation: 0,
                 categoryField: "wasteCat",
                 renderer: yRenderer
-            }));
+            })
+        );
 
-            var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+        var xAxis = chart.xAxes.push(
+            am5xy.ValueAxis.new(root, {
                 maxDeviation: 0,
                 min: 0,
                 strictMinMax: true,
                 extraMax: 0.1,
                 renderer: am5xy.AxisRendererX.new(root, {})
-            }));
+            })
+        );
 
-            xAxis.set("interpolationDuration", stepDuration / 10);
-            xAxis.set("interpolationEasing", am5.ease.linear);
+        xAxis.set("interpolationDuration", stepDuration / 10);
+        xAxis.set("interpolationEasing", am5.ease.linear);
 
-            yAxis.get("renderer").labels.template.setAll({
-                fill: am5.color(0xffffff),
-                fontFamily: 'Outfit'
-            });
-            xAxis.get("renderer").labels.template.setAll({
-                fill: am5.color(0xffffff),
-                fontFamily: 'Outfit'
-            });
+        yAxis.get("renderer").labels.template.setAll({
+            fill: am5.color(0xffffff),
+            fontFamily: "Outfit"
+        });
+        xAxis.get("renderer").labels.template.setAll({
+            fill: am5.color(0xffffff),
+            fontFamily: "Outfit"
+        });
 
-            // Add series
-            var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+        // Add series
+        var series = chart.series.push(
+            am5xy.ColumnSeries.new(root, {
                 xAxis: xAxis,
                 yAxis: yAxis,
                 valueXField: "value",
                 categoryYField: "wasteCat"
-            }));
+            })
+        );
 
-            // Rounded corners for columns
-            series.columns.template.setAll({ cornerRadiusBR: 5, cornerRadiusTR: 5 });
+        // Rounded corners for columns
+        series.columns.template.setAll({ cornerRadiusBR: 5, cornerRadiusTR: 5 });
 
-            // Define an array of green shades
-            var greenShades = ['#7ddc67', '#a0dc67', '#67dc75'];
+        // Define an array of green shades
+        var greenShades = ["#7ddc67", "#a0dc67", "#67dc75"];
 
-            // Make each column to be of a different color
-            series.columns.template.adapters.add("fill", function (fill, target) {
-                var index = series.columns.indexOf(target);
-                return am5.color(greenShades[index % greenShades.length]);
+        // Make each column to be of a different color
+        series.columns.template.adapters.add("fill", function(fill, target) {
+            var index = series.columns.indexOf(target);
+            return am5.color(greenShades[index % greenShades.length]);
+        });
+
+        series.columns.template.adapters.add("stroke", function(stroke, target) {
+            var index = series.columns.indexOf(target);
+            return am5.color(greenShades[index % greenShades.length]);
+        });
+
+        // Add label bullet
+        series.bullets.push(function() {
+            return am5.Bullet.new(root, {
+                locationX: 1,
+                sprite: am5.Label.new(root, {
+                    text: "{valueXWorking.formatNumber('#.# a')}",
+                    fill: root.interfaceColors.get("alternativeText"),
+                    fontFamily: "Outfit",
+                    centerX: am5.p110,
+                    centerY: am5.p50,
+                    populateText: true
+                })
             });
+        });
 
-            series.columns.template.adapters.add("stroke", function (stroke, target) {
-                var index = series.columns.indexOf(target);
-                return am5.color(greenShades[index % greenShades.length]);
-            });
-
-            // Add label bullet
-            series.bullets.push(function () {
-                return am5.Bullet.new(root, {
-                    locationX: 1,
-                    sprite: am5.Label.new(root, {
-                        text: "{valueXWorking.formatNumber('#.# a')}",
-                        fill: root.interfaceColors.get("alternativeText"),
-                        fontFamily: 'Outfit',
-                        centerX: am5.p110,
-                        centerY: am5.p50,
-                        populateText: true
-                    })
-                });
-            });
-
-            var label = chart.plotContainer.children.push(am5.Label.new(root, {
+        var label = chart.plotContainer.children.push(
+            am5.Label.new(root, {
                 text: "2009",
                 fontSize: "8em",
                 fill: am5.color(0xffffff),
-                fontFamily: 'Outfit',
+                fontFamily: "Outfit",
                 opacity: 0.2,
                 x: am5.p100,
                 y: am5.p100,
                 centerY: am5.p100,
                 centerX: am5.p100
-            }));
+            })
+        );
 
-            // Get series item by category
-            function getSeriesItem(category) {
-                for (var i = 0; i < series.dataItems.length; i++) {
-                    var dataItem = series.dataItems[i];
-                    if (dataItem.get("categoryY") == category) {
-                        return dataItem;
+        // Get series item by category
+        function getSeriesItem(category) {
+            for (var i = 0; i < series.dataItems.length; i++) {
+                var dataItem = series.dataItems[i];
+                if (dataItem.get("categoryY") == category) {
+                    return dataItem;
+                }
+            }
+        }
+
+        // Axis sorting
+        function sortCategoryAxis() {
+            // sort by value
+            series.dataItems.sort(function(x, y) {
+                return y.get("valueX") - x.get("valueX"); // descending
+                //return x.get("valueX") - y.get("valueX"); // ascending
+            });
+
+            // go through each axis item
+            am5.array.each(yAxis.dataItems, function(dataItem) {
+                // get corresponding series item
+                var seriesDataItem = getSeriesItem(dataItem.get("category"));
+
+                if (seriesDataItem) {
+                    // get index of series data item
+                    var index = series.dataItems.indexOf(seriesDataItem);
+                    // calculate delta position
+                    var deltaPosition =
+                        (index - dataItem.get("index", 0)) / series.dataItems.length;
+                    // set index to be the same as series data item index
+                    if (dataItem.get("index") != index) {
+                        dataItem.set("index", index);
+                        // set deltaPosition instanlty
+                        dataItem.set("deltaPosition", -deltaPosition);
+                        // animate delta position to 0
+                        dataItem.animate({
+                            key: "deltaPosition",
+                            to: 0,
+                            duration: stepDuration / 2,
+                            easing: am5.ease.out(am5.ease.cubic)
+                        });
                     }
                 }
+            });
+            // sort axis items by index.
+            // This changes the order instantly, but as deltaPosition is set, they keep in the same places and then animate to true positions.
+            yAxis.dataItems.sort(function(x, y) {
+                return x.get("index") - y.get("index");
+            });
+        }
+
+        var year = 1999;
+
+        // update data with values each 1.5 sec
+        var interval = setInterval(function() {
+            year++;
+
+            if (year > 2023) {
+                clearInterval(interval);
+                clearInterval(sortInterval);
             }
 
-            // Axis sorting
-            function sortCategoryAxis() {
-                // sort by value
-                series.dataItems.sort(function (x, y) {
-                    return y.get("valueX") - x.get("valueX"); // descending
-                    //return x.get("valueX") - y.get("valueX"); // ascending
-                });
+            updateData();
+        }, stepDuration);
 
-                // go through each axis item
-                am5.array.each(yAxis.dataItems, function (dataItem) {
-                    // get corresponding series item
-                    var seriesDataItem = getSeriesItem(dataItem.get("category"));
+        var sortInterval = setInterval(function() {
+            sortCategoryAxis();
+        }, 100);
 
-                    if (seriesDataItem) {
-                        // get index of series data item
-                        var index = series.dataItems.indexOf(seriesDataItem);
-                        // calculate delta position
-                        var deltaPosition =
-                            (index - dataItem.get("index", 0)) / series.dataItems.length;
-                        // set index to be the same as series data item index
-                        if (dataItem.get("index") != index) {
-                            dataItem.set("index", index);
-                            // set deltaPosition instanlty
-                            dataItem.set("deltaPosition", -deltaPosition);
-                            // animate delta position to 0
-                            dataItem.animate({
-                                key: "deltaPosition",
-                                to: 0,
-                                duration: stepDuration / 2,
-                                easing: am5.ease.out(am5.ease.cubic)
-                            });
-                        }
-                    }
-                });
-                // sort axis items by index.
-                // This changes the order instantly, but as deltaPosition is set, they keep in the same places and then animate to true positions.
-                yAxis.dataItems.sort(function (x, y) {
-                    return x.get("index") - y.get("index");
-                });
+        function setInitialData() {
+            var d = wasteCatData[year];
+
+            for (var n in d) {
+                series.data.push({ wasteCat: n, value: d[n] });
+                yAxis.data.push({ wasteCat: n });
             }
-
-            var year = 2009;
-
-            // update data with values each 1.5 sec
-            var interval = setInterval(function () {
-                year++;
-
-                if (year > 2022) {
-                    clearInterval(interval);
-                    clearInterval(sortInterval);
-                }
-
-                updateData();
-            }, stepDuration);
-
-            var sortInterval = setInterval(function () {
-                sortCategoryAxis();
-            }, 100);
-
-            function setInitialData() {
-                var d = wasteCatData[year];
-
-                for (var n in d) {
-                    series.data.push({ wasteCat: n, value: d[n] });
-                    yAxis.data.push({ wasteCat: n });
-                }
-            }
+        }
 
             function updateData() {
                 var itemsWithNonZero = 0;
@@ -348,112 +359,8 @@
         });
     </script>
 
-    <!-- PieChart -->
-    <script>
-        am5.ready(function () {
-
-            // Create root element
-            var root = am5.Root.new("pie_chart");
-
-            // Set themes
-            root.setThemes([
-                am5themes_Animated.new(root)
-            ]);
-
-            // Define an array of green shades
-            var greenShades = ['#a0dc67', '#67dc75'];
-
-            // Create chart
-            var chart = root.container.children.push(am5percent.PieChart.new(root, {
-                startAngle: 180,
-                endAngle: 360,
-                layout: root.verticalLayout,
-                innerRadius: am5.percent(50)
-            }));
-
-            // Create series
-            var series = chart.series.push(am5percent.PieSeries.new(root, {
-                startAngle: 180,
-                endAngle: 360,
-                valueField: "value",
-                categoryField: "category",
-                alignLabels: false
-            }));
-
-            series.states.create("hidden", {
-                startAngle: 180,
-                endAngle: 180
-            });
-
-            series.slices.template.setAll({
-                cornerRadius: 5,
-            });
-
-            series.slices.template.adapters.add("fill", function (fill, target) {
-                var index = series.slices.indexOf(target);
-                return am5.color(greenShades[index % greenShades.length]);
-            });
-
-            series.ticks.template.setAll({
-                forceHidden: true,
-            });
-
-            series.labels.template.setAll({
-                visible: false
-            });
-
-            // Fetch data
-            var wasteGenData = fetch("/data/solid-waste-generation-quantity-en-2022.json").then(response => response.json());
-            var wasteRecovData = fetch("/data/solid-waste-recovery-quantity-en-2022.json").then(response => response.json());
-
-            Promise.all([wasteGenData, wasteRecovData]).then(data => {
-                var wasteGenData = data[0];
-                var wasteRecovData = data[1];
-                processData(wasteGenData, wasteRecovData);
-            }).catch(error => {
-                console.error("Error loading JSON files", error);
-            });
-
-            function processData(generationData, recoveryData) {
-                const result = generationData.map(gen => {
-                    const recovery = recoveryData.find(rec => rec.year === gen.year);
-                    const difference = gen.generation_q - recovery.recovery_q;
-                    return {
-                        year: gen.year,
-                        waste_cat_en: gen.waste_cat_en,
-                        generation_q: gen.generation_q,
-                        recovery_q: recovery.recovery_q,
-                        difference
-                    };
-                });
-
-                const data2022 = result.find(item => item.year === 2022);
-                series.data.setAll([
-                    { value: data2022.generation_q, category: "Generation" },
-                    { value: data2022.recovery_q, category: "Recovery" }
-                ]);
-
-                // Create legend
-                var legend = chart.children.push(am5.Legend.new(root, {
-                    centerX: am5.p50,
-                    x: am5.p50,
-                    marginTop: 15,
-                    marginBottom: 15
-                }));
-
-                legend.labels.template.set("fill", am5.color(0x6C7293));
-                legend.labels.template.set("fontFamily", 'Outfit');
-                legend.valueLabels.template.set("fill", am5.color(0x6C7293));
-                legend.valueLabels.template.set("fontFamily", 'Outfit');
-                legend.data.setAll(series.dataItems);
-            }
-
-            // Play initial series animation
-            series.appear(1000, 100);
-
-        });
-    </script>
-
+    
+        
     <!-- BubbleChart -->
     <script>
         var trashes = [

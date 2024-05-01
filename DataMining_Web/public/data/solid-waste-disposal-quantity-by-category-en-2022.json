@@ -1,72 +1,199 @@
 {
+  "1999": {
+    "GDP": 1285946,
+    "All age group population": 6606.5,
+    "Class A Hong Kong": 193,
+    "Class A (Vacancy) - Unit": 14837,
+    "Class A (Stock)": 354000,
+    "Take Up (SA Less than 100 m2)": 17070
+  },
+  "2000": {
+    "GDP": 1337501,
+    "All age group population": 6665,
+    "Class A Hong Kong": 192,
+    "Class A (Vacancy) - Unit": 13454,
+    "Class A (Stock)": 358723,
+    "Take Up (SA Less than 100 m2)": 28240
+  },
+  "2001": {
+    "GDP": 1321142,
+    "All age group population": 6714.3,
+    "Class A Hong Kong": 187,
+    "Class A (Vacancy) - Unit": 14181,
+    "Class A (Stock)": 361243,
+    "Take Up (SA Less than 100 m2)": 17220
+  },
+  "2002": {
+    "GDP": 1297341,
+    "All age group population": 6744.1,
+    "Class A Hong Kong": 165,
+    "Class A (Vacancy) - Unit": 17347,
+    "Class A (Stock)": 367870,
+    "Take Up (SA Less than 100 m2)": 19830
+  },
+  "2003": {
+    "GDP": 1256669,
+    "All age group population": 6730.8,
+    "Class A Hong Kong": 152,
+    "Class A (Vacancy) - Unit": 15391,
+    "Class A (Stock)": 343639,
+    "Take Up (SA Less than 100 m2)": 20080
+  },
+  "2004": {
+    "GDP": 1316949,
+    "All age group population": 6783.5,
+    "Class A Hong Kong": 167,
+    "Class A (Vacancy) - Unit": 12445,
+    "Class A (Stock)": 346005,
+    "Take Up (SA Less than 100 m2)": 30890
+  },
+  "2005": {
+    "GDP": 1412125,
+    "All age group population": 6813.2,
+    "Class A Hong Kong": 188,
+    "Class A (Vacancy) - Unit": 10661,
+    "Class A (Stock)": 348951,
+    "Take Up (SA Less than 100 m2)": 16150
+  },
+  "2006": {
+    "GDP": 1503351,
+    "All age group population": 6857.1,
+    "Class A Hong Kong": 216,
+    "Class A (Vacancy) - Unit": 11117,
+    "Class A (Stock)": 350455,
+    "Take Up (SA Less than 100 m2)": 14040
+  },
+  "2007": {
+    "GDP": 1650756,
+    "All age group population": 6916.3,
+    "Class A Hong Kong": 246,
+    "Class A (Vacancy) - Unit": 10228,
+    "Class A (Stock)": 351595,
+    "Take Up (SA Less than 100 m2)": 19300
+  },
+  "2008": {
+    "GDP": 1707487,
+    "All age group population": 6957.8,
+    "Class A Hong Kong": 278,
+    "Class A (Vacancy) - Unit": 9412,
+    "Class A (Stock)": 352064,
+    "Take Up (SA Less than 100 m2)": 6290
+  },
   "2009": {
-    "Municipal solid waste": 3271300,
-    "Overall construction waste": 1139000,
-    "Special waste": 453700
+    "GDP": 1659245,
+    "All age group population": 6972.8,
+    "Class A Hong Kong": 236,
+    "Class A (Vacancy) - Unit": 8718,
+    "Class A (Stock)": 351751,
+    "Take Up (SA Less than 100 m2)": 10420
   },
   "2010": {
-    "Municipal solid waste": 3326700,
-    "Overall construction waste": 1308200,
-    "Special waste": 408400
+    "GDP": 1776332,
+    "All age group population": 7024.2,
+    "Class A Hong Kong": 285,
+    "Class A (Vacancy) - Unit": 9592,
+    "Class A (Stock)": 351879,
+    "Take Up (SA Less than 100 m2)": 5790
   },
   "2011": {
-    "Municipal solid waste": 3283500,
-    "Overall construction waste": 1215900,
-    "Special waste": 412800
+    "GDP": 1934430,
+    "All age group population": 7071.6,
+    "Class A Hong Kong": 331,
+    "Class A (Vacancy) - Unit": 8067,
+    "Class A (Stock)": 352056,
+    "Take Up (SA Less than 100 m2)": 10770
   },
   "2012": {
-    "Municipal solid waste": 3395700,
-    "Overall construction waste": 1258900,
-    "Special waste": 412400
+    "GDP": 2037059,
+    "All age group population": 7150.1,
+    "Class A Hong Kong": 325,
+    "Class A (Vacancy) - Unit": 8083,
+    "Class A (Stock)": 353023,
+    "Take Up (SA Less than 100 m2)": 6680
   },
   "2013": {
-    "Municipal solid waste": 3484600,
-    "Overall construction waste": 1310800,
-    "Special waste": 428000
+    "GDP": 2138305,
+    "All age group population": 7178.9,
+    "Class A Hong Kong": 377,
+    "Class A (Vacancy) - Unit": 12426,
+    "Class A (Stock)": 354077,
+    "Take Up (SA Less than 100 m2)": 6390
   },
   "2014": {
-    "Municipal solid waste": 3570400,
-    "Overall construction waste": 1438700,
-    "Special waste": 414300
+    "GDP": 2260005,
+    "All age group population": 7229.5,
+    "Class A Hong Kong": 397,
+    "Class A (Vacancy) - Unit": 8599,
+    "Class A (Stock)": 354926,
+    "Take Up (SA Less than 100 m2)": 14210
   },
   "2015": {
-    "Municipal solid waste": 3707900,
-    "Overall construction waste": 1533000,
-    "Special waste": 271400
+    "GDP": 2398280,
+    "All age group population": 7291.3,
+    "Class A Hong Kong": 435,
+    "Class A (Vacancy) - Unit": 8331,
+    "Class A (Stock)": 355969,
+    "Take Up (SA Less than 100 m2)": 8970
   },
   "2016": {
-    "Municipal solid waste": 3786400,
-    "Overall construction waste": 1618600,
-    "Special waste": 206600
+    "GDP": 2490598,
+    "All age group population": 7336.6,
+    "Class A Hong Kong": 415,
+    "Class A (Vacancy) - Unit": 9319,
+    "Class A (Stock)": 359725,
+    "Take Up (SA Less than 100 m2)": 11040
   },
   "2017": {
-    "Municipal solid waste": 3917600,
-    "Overall construction waste": 1535600,
-    "Special waste": 210100
+    "GDP": 2659611,
+    "All age group population": 7393.2,
+    "Class A Hong Kong": 452,
+    "Class A (Vacancy) - Unit": 11761,
+    "Class A (Stock)": 366520,
+    "Take Up (SA Less than 100 m2)": 14867
   },
   "2018": {
-    "Municipal solid waste": 4171100,
-    "Overall construction waste": 1489500,
-    "Special waste": 214300
+    "GDP": 2835429,
+    "All age group population": 7452.6,
+    "Class A Hong Kong": 488,
+    "Class A (Vacancy) - Unit": 14206,
+    "Class A (Stock)": 372678,
+    "Take Up (SA Less than 100 m2)": 11083
   },
   "2019": {
-    "Municipal solid waste": 4035700,
-    "Overall construction waste": 1440100,
-    "Special waste": 231700
+    "GDP": 2845022,
+    "All age group population": 7507.9,
+    "Class A Hong Kong": 507,
+    "Class A (Vacancy) - Unit": 13819,
+    "Class A (Stock)": 378819,
+    "Take Up (SA Less than 100 m2)": 16751
   },
-  "2020": {
-    "Municipal solid waste": 3956000,
-    "Overall construction waste": 1251100,
-    "Special waste": 187600
+   "2020": {
+   "GDP": 2675793,
+   "All age group population": 7481,
+   "Class A Hong Kong": 445,
+   "Class A (Vacancy) - Unit": 15639,
+   "Class A (Stock)": 387593,
+   "Take Up (SA Less than 100 m2)": 10787
   },
-  "2021": {
-    "Municipal solid waste": 4145600,
-    "Overall construction waste": 1330600,
-    "Special waste": 193200
+   "2021": {
+   "GDP": 2867973,
+   "All age group population": 7413.1,
+   "Class A Hong Kong": 446,
+   "Class A (Vacancy) - Unit": 15023,
+   "Class A (Stock)": 392356,
+   "Take Up (SA Less than 100 m2)": 14101
   },
-  "2022": {
-    "Municipal solid waste": 4061900,
-    "Overall construction waste": 1506800,
-    "Special waste": 171100
+   "2022": {
+   "GDP": 2809100,
+   "All age group population": 7346.1,
+   "Class A Hong Kong": 445,
+   "Class A (Vacancy) - Unit": 18070,
+   "Class A (Stock)": 401220,
+   "Take Up (SA Less than 100 m2)": 13100
+  },
+   "2023": {
+   "GDP": 2991328,
+   "All age group population": 7536.1,
+   "Class A Hong Kong": 456
   }
 }
